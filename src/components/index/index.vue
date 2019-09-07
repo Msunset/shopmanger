@@ -10,11 +10,8 @@
         </el-col>
         <el-col :span="16">
           <div class="grid-content bg-purple-light model">
-<<<<<<< HEAD
-            <h2>greend 系统管理后台</h2>
-=======
             <h2>Green系统管理后台</h2>
->>>>>>> dev-user
+
           </div>
         </el-col>
         <el-col :span="2">
