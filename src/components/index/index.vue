@@ -10,7 +10,7 @@
         </el-col>
         <el-col :span="16">
           <div class="grid-content bg-purple-light model">
-            <h2>green 系统管理后台</h2>
+            <h2>greend 系统管理后台</h2>
           </div>
         </el-col>
         <el-col :span="2">
