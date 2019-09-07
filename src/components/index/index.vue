@@ -10,7 +10,11 @@
         </el-col>
         <el-col :span="16">
           <div class="grid-content bg-purple-light model">
+<<<<<<< HEAD
             <h2>greend 系统管理后台</h2>
+=======
+            <h2>Green系统管理后台</h2>
+>>>>>>> dev-user
           </div>
         </el-col>
         <el-col :span="2">
@@ -32,9 +36,9 @@
                 <i class="el-icon-user-solid"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="userList" @click="userList()">
                 <i class="el-icon-c-scale-to-original"></i>
-                <span @click="usrList()">用户列表</span>
+                <span>用户列表</span>
               </el-menu-item>
 
             </el-submenu>
@@ -43,11 +47,11 @@
                 <i class="el-icon-s-cooperation"></i>
                 <span>权限管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="2-1">
                 <i class="el-icon-thumb"></i>
                 <span>角色列表</span>
               </el-menu-item>
-              <el-menu-item index="1-1">
+              <el-menu-item index="2-1">
                 <i class="el-icon-cpu"></i>
                 <span>权限列表</span>
               </el-menu-item>
@@ -58,18 +62,18 @@
                 <i class="el-icon-s-goods"></i>
                 <span>商品管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="3-1">
                 <i class="el-icon-tickets"></i>
                 <span>商品列表</span>
               </el-menu-item>
-              <el-menu-item index="1-1">
+              <el-menu-item index="3-1">
                 <i class="el-icon-document"></i>
                 <span>分类参数</span>
               </el-menu-item>
-              <el-menu-item index="1-1">
-              <i class="el-icon-document-remove"></i>
-              <span>商品分类</span>
-            </el-menu-item>
+              <el-menu-item index="3-1">
+                <i class="el-icon-document-remove"></i>
+                <span>商品分类</span>
+              </el-menu-item>
 
             </el-submenu>
             <el-submenu index="4">
@@ -77,7 +81,7 @@
                 <i class="el-icon-s-order"></i>
                 <span>订单管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="4-1">
                 <i class="el-icon-tickets"></i>
                 <span>订单列表</span>
               </el-menu-item>
@@ -88,9 +92,9 @@
                 <i class="el-icon-s-data"></i>
                 <span>数据统计</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="5-1">
                 <i class="el-icon-s-grid"></i>
-                <span>数据报表</span>
+                <span>数据报表</span >
               </el-menu-item>
 
             </el-submenu>
@@ -100,7 +104,9 @@
       </el-aside>
       <!--      main-->
       <el-container>
-        <el-main class="main">Main</el-main>
+        <el-main class="main">
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </el-container>
@@ -118,16 +124,17 @@
     data () {
       return {}
     },
-    methods:{
-      singOut(){
-        localStorage.clear();
-        this.$router.push("/login")
-        this.$message.warning("退出成功")
+    methods: {
+      singOut () {
+        localStorage.clear()
+        this.$router.push('/login')
+        this.$message.warning('退出成功')
 
       },
-      userList(){
-
+      userList () {
+        this.$router.push({name: 'userList'}).catch(e =>{})
       }
+
     }
 
   }
@@ -144,7 +151,7 @@
   }
 
   .main {
-    background-color: cadetblue;
+    background-color: #f6fffc;
   }
 
   .img {
@@ -153,7 +160,7 @@
   }
 
   .model {
-    text-align: center;
+    padding-left: 30%;
     color: #6a7165;
 
   }

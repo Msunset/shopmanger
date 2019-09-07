@@ -8,6 +8,7 @@ import router from './router'
 import '@/assets/css/base.css'
 // import axios from './plugin/http.js'
 import axios from 'axios'
+import './plugin/dateFormat.js'
 Vue.prototype.axios = axios
 axios.defaults.baseURL = 'http://api.xiaomadagege.cn:8808/api/private/v1/'
 Vue.use(ElementUI)
@@ -15,6 +16,9 @@ Vue.use(ElementUI)
 // Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+Vue.filter('dateFormat',value =>{
+    return new Date(value).Format("yyyy-MM-dd hh:mm")
+})
 new Vue({
   el: '#app',
   router,
