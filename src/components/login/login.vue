@@ -59,6 +59,7 @@
             this.$router.push("/")
           }else {
             this.open2(msg,'warning')
+            //
           }
 
         })
