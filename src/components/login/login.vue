@@ -24,7 +24,7 @@
       let that = this;
       document.onkeypress = function(e) {
         var keycode = document.all ? event.keyCode : e.which;
-        if (keycode == 13) {
+        if (keycode === 13) {
           that.login();// 登录方法名
           return false;
         }
@@ -59,7 +59,7 @@
             this.$router.push("/")
           }else {
             this.open2(msg,'warning')
-            //
+
           }
 
         })
@@ -83,7 +83,6 @@
     background: #ebeeff;
     border-radius: 10px;
     padding: 45px;
-    border: rgba(209, 206, 238, 0.91) solid thin;
   }
 
   .login-warp .login-btn {
