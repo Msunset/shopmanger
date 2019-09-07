@@ -32,9 +32,9 @@
                 <i class="el-icon-user-solid"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="userList" @click="userList()">
                 <i class="el-icon-c-scale-to-original"></i>
-                <span @click="usrList()">用户列表</span>
+                <span>用户列表</span>
               </el-menu-item>
 
             </el-submenu>
@@ -67,9 +67,9 @@
                 <span>分类参数</span>
               </el-menu-item>
               <el-menu-item index="1-1">
-              <i class="el-icon-document-remove"></i>
-              <span>商品分类</span>
-            </el-menu-item>
+                <i class="el-icon-document-remove"></i>
+                <span>商品分类</span>
+              </el-menu-item>
 
             </el-submenu>
             <el-submenu index="4">
@@ -100,7 +100,9 @@
       </el-aside>
       <!--      main-->
       <el-container>
-        <el-main class="main">Main</el-main>
+        <el-main class="main">
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </el-container>
@@ -118,16 +120,17 @@
     data () {
       return {}
     },
-    methods:{
-      singOut(){
-        localStorage.clear();
-        this.$router.push("/login")
-        this.$message.warning("退出成功")
+    methods: {
+      singOut () {
+        localStorage.clear()
+        this.$router.push('/login')
+        this.$message.warning('退出成功')
 
       },
-      userList(){
-
+      userList () {
+        this.$router.push({name: 'userList'})
       }
+
     }
 
   }
