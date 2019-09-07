@@ -11,7 +11,7 @@
       <el-form-item label="密码">
         <el-input v-model="formData.password"></el-input>
       </el-form-item>
-      <el-button type="primary" class="login-btn" @click.passive="login()">登录</el-button>
+      <el-button type="primary" class="login-btn" @click.passive="login()" id="btn">登录</el-button>
 
     </el-form>
 
@@ -20,6 +20,16 @@
 
 <script>
   export default {
+    created() {
+      let that = this;
+      document.onkeypress = function(e) {
+        var keycode = document.all ? event.keyCode : e.which;
+        if (keycode == 13) {
+          that.login();// 登录方法名
+          return false;
+        }
+      };
+    },
     data () {
       return {
         formData: {
@@ -43,8 +53,10 @@
           console.log(res)
           const {data,meta:{msg,status}} = res.data
           if (status ===200 ){
+            console.log(data.token)
+            localStorage.setItem('token',data.token)
             this.open2(msg,'success')
-            this.$router.push("index")
+            this.$router.push("/")
           }else {
             this.open2(msg,'warning')
           }
@@ -76,7 +88,6 @@
   .login-warp .login-btn {
     background-color: #45beff;
     width: 100%;
-
   }
 
 </style>
