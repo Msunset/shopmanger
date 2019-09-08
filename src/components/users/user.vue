@@ -1,5 +1,6 @@
 <template>
-  <div class="vessel">
+  <el-card class="vessel">
+<!--    面包屑-->
     <el-breadcrumb separator-class="el-icon-arrow-right " class="crumbs">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
@@ -12,6 +13,7 @@
       </el-input>
       <el-button type="success"  @click="dialogForm()">添加用户</el-button>
     </div>
+
     <div style="padding: 20px">
       <el-table
         :data="tableData"
@@ -150,7 +152,7 @@
         </el-dialog>
       </div>
     </div>
-  </div>
+  </el-card>
 
 
 </template>
@@ -336,7 +338,7 @@
   }
 
   .crumbs {
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
   }
 
