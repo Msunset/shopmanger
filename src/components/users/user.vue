@@ -72,6 +72,11 @@
               type="danger"
               @click="deleteUser(scope.row.id)">删除
             </el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="getPermission(scope.row.id)">权限
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -90,7 +95,7 @@
       <div>
 
 <!--添加弹框-->
-      <el-dialog title="添加用户" :visible.sync="dialogFormVisible" class="dialog" :showClose="showClose">
+      <el-dialog title="添加用户" :visible.sync="dialogFormVisible" class="dialog">
         <el-form :model="form">
           <el-form-item label="用户名" :label-width="formLabelWidth">
             <el-input  v-model="form.username" ></el-input>
@@ -111,7 +116,7 @@
         </div>
       </el-dialog>
 <!--        编辑弹框-->
-        <el-dialog title="编辑用户" :visible.sync="dialogFormVisible1" class="dialog" :showClose="showClose">
+        <el-dialog title="编辑用户" :visible.sync="dialogFormVisible1" class="dialog">
           <el-form :model="form">
             <el-form-item label="* 用户名" :label-width="formLabelWidth" >
               <el-input  v-model="form.username" :disabled="true"></el-input>
@@ -128,6 +133,21 @@
             <el-button type="primary" @click="updateUser(form.id)">确 定</el-button>
           </div>
         </el-dialog>
+<!--        权限弹窗-->
+        <el-dialog title="权限分配" :visible.sync="dialogFormVisible2" class="dialog">
+          <el-form :model="form">
+            <el-form-item label="* 用户名" :label-width="formLabelWidth" >
+              <el-input  v-model="form.username" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="权限分配" :label-width="formLabelWidth">
+              <el-input v-model="form.mobile" ></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="cancel()">取 消</el-button>
+            <el-button type="primary" @click="updatePermission(form.id)">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -142,7 +162,6 @@
     },
     data () {
       return {
-        showClose: false,
         value: 100,
         tableData: [],
         pageSize : 10,
@@ -152,6 +171,7 @@
         dialogFormVisible: false,
         dialogFormVisible1 :false,
         dialogTableVisible1: false,
+        dialogFormVisible2 :false,
         form: {
           id:'',
           username: '',
@@ -167,6 +187,19 @@
 
 
     methods: {
+
+      //更该用户权限
+      //1.查询权限
+      getPermission(userId){
+        this.dialogForm2()
+        const res = this.getUserById(userId)
+        console.log(res)
+
+      },
+      //2.修改权限
+      updatePermission(){
+
+      },
       //编辑用户
       //1.根据id查询
       getUserById(userId){
@@ -235,10 +268,8 @@
           if(status === 201){
             this.$message.success(msg)
             this.getUser()
-            this.form = {}
           }else {
             this.$message.error(msg)
-            this.form = {}
 
           }
           this.cancel()
@@ -257,7 +288,6 @@
             console.log(total)
             this.total = total
             this.tableData = users
-
           }
 
         })
@@ -265,12 +295,20 @@
       cancel(){
         this.dialogFormVisible =  false
         this.dialogFormVisible1 =  false
-        this.form = {}
       },
+      //打开弹框（添加）
       dialogForm(){
+        this.form = {}
         this.dialogFormVisible =  true
       },
+      //打开弹框（编辑）
       dialogForm1(){
+        this.form = {}
+        this.dialogFormVisible1 =  true
+      },
+      //打开弹框(权限)
+      dialogForm2(){
+        this.form = {}
         this.dialogFormVisible1 =  true
       },
       handleSizeChange (val) {
