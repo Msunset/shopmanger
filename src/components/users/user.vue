@@ -282,14 +282,13 @@
         this.axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         //this.axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
         this.axios.get('users?query='+this.query+'&pagenum='+this.currentPage4+'&pagesize='+this.pageSize).then(res => {
-          console.log(res)
+          console.log(res.data)
           const {data: {users,total}, meta: {msg, status}} = res.data
           if (status === 200) {
             console.log(total)
             this.total = total
             this.tableData = users
           }
-
         })
       },
       cancel(){

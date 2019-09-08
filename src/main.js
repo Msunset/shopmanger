@@ -6,12 +6,18 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import '@/assets/css/base.css'
+import VueRouter from 'vue-router'
 // import axios from './plugin/http.js'
 import axios from 'axios'
 import './plugin/dateFormat.js'
 Vue.prototype.axios = axios
 axios.defaults.baseURL = 'http://api.xiaomadagege.cn:8808/api/private/v1/'
 Vue.use(ElementUI)
+Vue.use(VueRouter)
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 // Vue.use(axios)
 // Vue.config.productionTip = false
 

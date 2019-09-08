@@ -27,13 +27,14 @@
         <el-col :span="24">
           <el-menu
             :unique-opened="true"
-            class="el-menu-vertical-demo">
+            class="el-menu-vertical-demo"
+            router="router">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-user-solid"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="userList" @click="userList()">
+              <el-menu-item index="/userList" @click="userList()">
                 <i class="el-icon-c-scale-to-original"></i>
                 <span>用户列表</span>
               </el-menu-item>
@@ -44,11 +45,11 @@
                 <i class="el-icon-s-cooperation"></i>
                 <span>权限管理</span>
               </template>
-              <el-menu-item index="2-1">
+              <el-menu-item index="/role">
                 <i class="el-icon-thumb"></i>
                 <span>角色列表</span>
               </el-menu-item>
-              <el-menu-item index="2-1">
+              <el-menu-item index="/permission">
                 <i class="el-icon-cpu"></i>
                 <span>权限列表</span>
               </el-menu-item>
