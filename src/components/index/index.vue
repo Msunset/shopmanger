@@ -29,74 +29,16 @@
             :unique-opened="true"
             class="el-menu-vertical-demo"
             router="router">
-            <el-submenu index="1">
+            <el-submenu v-for="(oneMenu,index) in leftList" :key="index" :index="index+1+''" >
               <template slot="title">
                 <i class="el-icon-user-solid"></i>
-                <span>用户管理</span>
+                <span>{{oneMenu.authName}}</span>
               </template>
-              <el-menu-item index="/userList" @click="userList()">
+              <el-menu-item :index="towMenu.path"  v-for="(towMenu,index) in oneMenu.children" >
                 <i class="el-icon-c-scale-to-original"></i>
-                <span>用户列表</span>
+                <span>{{towMenu.authName}}</span>
               </el-menu-item>
-
             </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-s-cooperation"></i>
-                <span>权限管理</span>
-              </template>
-              <el-menu-item index="/role">
-                <i class="el-icon-thumb"></i>
-                <span>角色列表</span>
-              </el-menu-item>
-              <el-menu-item index="/permission">
-                <i class="el-icon-cpu"></i>
-                <span>权限列表</span>
-              </el-menu-item>
-
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-s-goods"></i>
-                <span>商品管理</span>
-              </template>
-              <el-menu-item index="3-1">
-                <i class="el-icon-tickets"></i>
-                <span>商品列表</span>
-              </el-menu-item>
-              <el-menu-item index="3-1">
-                <i class="el-icon-document"></i>
-                <span>分类参数</span>
-              </el-menu-item>
-              <el-menu-item index="3-1">
-                <i class="el-icon-document-remove"></i>
-                <span>商品分类</span>
-              </el-menu-item>
-
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-s-order"></i>
-                <span>订单管理</span>
-              </template>
-              <el-menu-item index="4-1">
-                <i class="el-icon-tickets"></i>
-                <span>订单列表</span>
-              </el-menu-item>
-
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-s-data"></i>
-                <span>数据统计</span>
-              </template>
-              <el-menu-item index="5-1">
-                <i class="el-icon-s-grid"></i>
-                <span>数据报表</span >
-              </el-menu-item>
-
-            </el-submenu>
-
           </el-menu>
         </el-col>
       </el-aside>
@@ -113,16 +55,30 @@
 <script>
   export default {
     beforeCreate: function () {
-      var token = localStorage.getItem('token')
+      let token = localStorage.getItem('token')
       if (token === null) {
         this.$router.push('login')
       }
 
     },
     data () {
-      return {}
+      return {
+        leftList:[],
+        index:'',
+      }
+    },
+    created(){
+      this.getIndex()
     },
     methods: {
+      async getIndex(){
+        this.axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
+        const res = await this.axios.get(`menus`)
+        const {data,meta:{msg,status}} = res.data
+        this.leftList = data
+        console.log(this.leftList)
+        console.log(res)
+      },
       singOut () {
         localStorage.clear()
         this.$router.push('/login')

@@ -26,18 +26,18 @@ export default new Router({
           component: Error
         },
         {
-          name: 'userList',
-          path: '/userList',
+          name: 'users',
+          path: '/users',
           component: UserList
         },
         {
-          name: 'role',
-          path: '/role',
+          name: 'roles',
+          path: '/roles',
           component: Role
         },
         {
-          name: 'permission',
-          path: '/permission',
+          name: 'rights',
+          path: '/rights',
           component: Permission
         }]
     }

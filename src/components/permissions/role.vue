@@ -162,10 +162,15 @@
         let arr1 = this.$refs.tree.getCheckedKeys()
         let arr2 =this.$refs.tree.getHalfCheckedKeys()
         let arr = [...arr1,...arr2]
-        const res = this.axios.post(`roles/${this.roleId}/rights`,{rids:arr.join(',')})
-        console.log(res)
+        const res = await this.axios.post(`roles/${this.roleId}/rights`,{rids:arr.join(',')})
+        const {meta:{msg,status}} = res.data
+        console.log(msg)
+        if (status === 200){
+          this.$message.success(msg)
+          this.getRole()
+        }
         this.dialogVisible = false
-        this.getRole()
+
 
       }
     }

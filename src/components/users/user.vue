@@ -141,13 +141,22 @@
             <el-form-item label="* 用户名" :label-width="formLabelWidth" >
               <el-input  v-model="form.username" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="权限分配" :label-width="formLabelWidth">
-              <el-input v-model="form.mobile" ></el-input>
+            <el-form-item label="权限分配" :label-width="formLabelWidth" >
+              <el-select v-model=" id">
+                <el-option  label="请选择" :value="-1">
+                </el-option>
+                <el-option
+                  v-for="item in options"
+                  :key="item.id"
+                  :label="item.roleName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="cancel()">取 消</el-button>
-            <el-button type="primary" @click="updatePermission(form.id)">确 定</el-button>
+            <el-button type="primary" @click="updatePermission(form)">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -164,7 +173,8 @@
     },
     data () {
       return {
-        value: 100,
+        id: '',
+        options:[],
         tableData: [],
         pageSize : 10,
         total:0,
@@ -194,12 +204,34 @@
       //1.查询权限
       getPermission(userId){
         this.dialogForm2()
-        const res = this.getUserById(userId)
-        console.log(res)
+        this.axios.get(`users/${userId}`).then(res =>{
+          console.log(res)
+          const {data:{username,rid},meta:{msg,status}} = res.data
+          this.id = rid
+          this.form.username = username
+          this.form.id = userId
+        })
+        this.axios.get(`roles`).then(res =>{
+          const {data} = res.data
+          this.options = data
+          console.log(res)
+        })
+
 
       },
       //2.修改权限
-      updatePermission(){
+      updatePermission(form){
+        this.axios.put(`users/${form.id}/role`,{rid:this.id}).then(res => {
+          const {meta:{msg,status}} = res.data
+          if(status === 200){
+            this.$message.success(msg)
+            this.dialogFormVisible2 =  false
+          }else {
+            this.$message.error(msg)
+          }
+          console.log(res)
+
+        })
 
       },
       //编辑用户
@@ -250,6 +282,7 @@
       updateState(id,state){
         console.log(id,state)
        // console.log(id,state)
+        this.axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         this.axios.put(`users/${id}/state/${state}`).then(res =>{
           console.log(res)
           const {meta:{msg,status}} = res.data
@@ -296,6 +329,7 @@
       cancel(){
         this.dialogFormVisible =  false
         this.dialogFormVisible1 =  false
+        this.dialogFormVisible2 =  false
       },
       //打开弹框（添加）
       dialogForm(){
@@ -310,7 +344,7 @@
       //打开弹框(权限)
       dialogForm2(){
         this.form = {}
-        this.dialogFormVisible1 =  true
+        this.dialogFormVisible2 =  true
       },
       handleSizeChange (val) {
         this.pageSize = val
